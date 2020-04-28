@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace practice_object2
 {
     class Program
     {
+        #region　参照渡し・値渡し練習
         //参照型の値渡し①。実引数の値にも更新処理が影響する
         public int[] Update1(int[] data)
         {
@@ -41,6 +43,20 @@ namespace practice_object2
         {
             return ref data[1];
         }
+        #endregion
+
+        //タプル型で戻り値の型定義すれば複数の値を返せる
+        public (int max,int min) GetMaxMin(int x, int y)
+        {
+            //大きい方をmaxに、小さい方をminに代入する三項演算子
+            return x >= y ? (x, y) : (y, x);
+        }
+        public (string name,int age) GetNameAndAge(string x,int y)
+        {
+            return (x,y+1);
+        }
+
+
 
         static void Main(string[] args)
         {
@@ -65,6 +81,31 @@ namespace practice_object2
             num = 24;
             Console.WriteLine(num);
             Console.WriteLine(data1[1]);
+
+            var t = p1.GetMaxMin(200, 300);
+            Console.WriteLine(t.max);
+            Console.WriteLine(t.min);
+
+            var t2 =p1.GetNameAndAge("春樹",65);
+            Console.WriteLine($"{t2.name}:{t2.age}歳");
+
+            //タプルのリストを作ることができる
+            var list = new List<(string name,int age)> { };
+            list.Add(("アスカ",14));
+            list.Add(("シンジ", 15));
+            foreach(var (x,y) in list)
+            {
+                Console.WriteLine($"{x}は{y}歳です");
+            }
+
+            //タプルでディクショナリ作ることできる
+            var dic = new Dictionary<(int year,string month),(string name,int old)> { };
+            dic.Add((1992,"６月"),("カヲル",14));
+            //取り出すときはタプル型で変数型を用意して受け取る
+            (string x, int y) tuple;
+            Console.WriteLine(dic.TryGetValue((1992, "６月"),out tuple));
+            Console.WriteLine(dic[(1992, "６月")]);
+
         }
     }
 
