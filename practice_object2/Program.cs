@@ -56,7 +56,19 @@ namespace practice_object2
             return (x,y+1);
         }
 
-
+        public IEnumerable<int> FromTo(int from,int to)
+        {
+            while (from <= to)
+            {
+                yield return from++;
+            }
+        }
+        public IEnumerable<string> GetNames()
+        {
+            yield return "あいこ";
+            yield return "さき";
+            yield return "まきこ";
+        }
 
         static void Main(string[] args)
         {
@@ -106,6 +118,19 @@ namespace practice_object2
             Console.WriteLine(dic.TryGetValue((1992, "６月"),out tuple));
             Console.WriteLine(dic[(1992, "６月")]);
 
+            //匿名型：読み取り専用のフィールド
+            var info = new {title="君の名は",review=5};
+            Console.WriteLine($"{info.title}:{info.review}");
+
+            //イテレーター。メソッドからの戻り値を反復で処理したい場合に便利
+            foreach (var i in p1.FromTo(10,15))
+            {
+                Console.WriteLine(i);
+            }
+            foreach (var n in p1.GetNames())
+            {
+                Console.WriteLine(n);
+            }
         }
     }
 
